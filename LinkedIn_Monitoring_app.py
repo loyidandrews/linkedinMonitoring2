@@ -219,7 +219,7 @@ with col1:
    st.write(str(a2[0])) #totInteractions
    st.markdown('_Link to this Post_ ') 
    st.write(str(a1[0])) #profileUrl
-   st.markdown('_Link to his Profile_ ') 
+   st.markdown('_Link to Profile_ ') 
    st.write(str(a11[0])) #profileUrl
 
 with col2:
@@ -232,7 +232,7 @@ with col2:
    st.write(str(b2[0])) #totInteractions
    st.markdown('_Link to this Post_ ') 
    st.write(str(b1[0])) #profileUrl
-   st.markdown('_Link to his Profile_ ') 
+   st.markdown('_Link to Profile_ ') 
    st.write(str(b11[0])) #profileUrl
 
 with col3:
@@ -245,7 +245,7 @@ with col3:
    st.write(str(c2[0])) #totInteractions
    st.markdown('_Link to this Post_ ') 
    st.write(str(c1[0])) #profileUrl
-   st.markdown('_Link to his Profile_ ') 
+   st.markdown('_Link to Profile_ ') 
    st.write(str(c11[0])) #profileUrl
 
 with col4:
@@ -259,7 +259,7 @@ with col4:
    st.write(str(d2[0])) #totInteractions
    st.markdown('_Link to this Post_ ') 
    st.write(str(d1[0])) #profileUrl
-   st.markdown('_Link to his Profile_ ') 
+   st.markdown('_Link to Profile_ ') 
    st.write(str(d11[0])) #profileUrl
 
 
