@@ -153,7 +153,7 @@ df5.sort_values(['Total_Interactions'], ascending=False, inplace=True)
 
 df5['Total_Interactions'] = df5['Total_Interactions'].astype(int)
 
-#df5 = df5.reset_index(drop=True)
+df5 = df5.reset_index(drop=True)
 
 black_image = 'https://i.imgflip.com/505yh3.png'
 
@@ -256,7 +256,7 @@ with col3:
    st.write(str(c11[0])) #profileUrl
 
 with col4:
-   st.subheader(df5.CEO.iloc[3])
+   st.subheader(df5.CEO.iloc[4])
    #st.image("https://static.streamlit.io/examples/owl.jpg")
    st.image(d0[0])
    #st.markdown('_Post Content_ ')
