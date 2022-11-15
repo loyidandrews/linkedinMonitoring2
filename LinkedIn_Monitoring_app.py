@@ -232,7 +232,6 @@ st.download_button(
    
 
 
-st.header('Top Interacting Posts in last 24 Hours')
 #st.write(a)
 
 
@@ -244,6 +243,7 @@ st.bar_chart(df5, x='CEO', y='Total_Interactions',use_container_width=True)
 #st.sidebar.header('Input')
 
 
+st.header('Top Interacting Posts in last 24 Hours')
 
 
 thumbnails = st.columns(5)
