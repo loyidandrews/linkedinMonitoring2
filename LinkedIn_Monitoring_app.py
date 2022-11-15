@@ -148,8 +148,12 @@ cols = ['CEO','postContent','postUrl','likeCount','commentCount','Total_Interact
 df5 = df5[cols]
 df5.sort_values(['Total_Interactions'], ascending=False, inplace=True)
 
-df5['Total_Interactions'] = df5['Total_Interactions'].astype(int)
+
 #df5 = df5["imgUrl"].str.replace("<NA>","https://www.citypng.com/public/uploads/preview/download-horizontal-black-line-png-31631830482cvrhyz46le.png")
+
+df5['Total_Interactions'] = df5['Total_Interactions'].astype(int)
+
+df5 = df5.reset_index(drop=True)
 
 black_image = 'https://i.imgflip.com/505yh3.png'
 
@@ -213,53 +217,57 @@ with col1:
    #st.image("https://static.streamlit.io/examples/cat.jpg")
    #st.write('Post Content')
    #st.image(a0[0])
-   st.markdown('_Post Content_ ')
-   st.write(str(a[0])) #postContent
+   #st.markdown('_Post Content_ ')
+   with st.expander('Post Content'):
+        st.write(str(a[0])) #postContent
    st.markdown('_Total Interactions for this Post:_ ') 
    st.write(str(a2[0])) #totInteractions
    st.markdown('_Link to this Post_ ') 
    st.write(str(a1[0])) #profileUrl
-   st.markdown('_Link to Profile_ ') 
+   st.markdown('_Link to his Profile_ ') 
    st.write(str(a11[0])) #profileUrl
 
 with col2:
    st.subheader(df5.CEO.iloc[1])
    #st.image("https://static.streamlit.io/examples/dog.jpg")
    st.image(b0[0])
-   st.markdown('_Post Content_ ')
-   st.write(str(b[0]))
+   #st.markdown('_Post Content_ ')
+   with st.expander('Post Content'):
+        st.write(str(b[0])) #postContent
    st.markdown('_Total Interactions for this Post:_ ') 
    st.write(str(b2[0])) #totInteractions
    st.markdown('_Link to this Post_ ') 
    st.write(str(b1[0])) #profileUrl
-   st.markdown('_Link to Profile_ ') 
+   st.markdown('_Link to his Profile_ ') 
    st.write(str(b11[0])) #profileUrl
 
 with col3:
    st.subheader(df5.CEO.iloc[2])
    #st.image("https://static.streamlit.io/examples/owl.jpg")
    st.image(c0[0])
-   st.markdown('_Post Content_ ')
-   st.write(str(c[0]))
+   #st.markdown('_Post Content_ ')
+   with st.expander('Post Content'):
+        st.write(str(c[0])) #postContent
    st.markdown('_Total Interactions for this Post:_ ') 
    st.write(str(c2[0])) #totInteractions
    st.markdown('_Link to this Post_ ') 
    st.write(str(c1[0])) #profileUrl
-   st.markdown('_Link to Profile_ ') 
+   st.markdown('_Link to his Profile_ ') 
    st.write(str(c11[0])) #profileUrl
 
 with col4:
    st.subheader(df5.CEO.iloc[3])
    #st.image("https://static.streamlit.io/examples/owl.jpg")
    st.image(d0[0])
-   st.markdown('_Post Content_ ')
-   st.write(str(d[0]))
+   #st.markdown('_Post Content_ ')
+   with st.expander('Post Content'):
+        st.write(str(d[0])) #postContent
 
    st.markdown('_Total Interactions for this Post:_ ') 
    st.write(str(d2[0])) #totInteractions
    st.markdown('_Link to this Post_ ') 
    st.write(str(d1[0])) #profileUrl
-   st.markdown('_Link to Profile_ ') 
+   st.markdown('_Link to his Profile_ ') 
    st.write(str(d11[0])) #profileUrl
 
 
@@ -310,11 +318,6 @@ st.bar_chart(df5, x='CEO', y='Total_Interactions',use_container_width=True)
 #   st.info('☝️ Upload a CSV file')
 
 # "
-
-
-  
-
-
 
 
   
