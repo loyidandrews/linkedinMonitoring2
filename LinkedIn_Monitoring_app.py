@@ -10,10 +10,14 @@ from datetime import datetime,timedelta
 import pytz
 import re
 
+# with open('style.css') as f:
+#     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 st.set_page_config(layout="wide")
 
 import time
+
+#st.sidebar.success("Select a page above")
 
 
 st.image(
@@ -128,10 +132,51 @@ df['date'] =  pd.to_datetime(df['postDate'])
 
 df['Total_Interactions'] = df['likeCount'] + df['commentCount']
 
+
+df['profileImg']  = df['action']
+
+df.loc[df.profileUrl == "https://www.linkedin.com/in/assaadrazzouk/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/C4D03AQHZCSQaliXdiQ/profile-displayphoto-shrink_800_800/0/1516255427468?e=2147483647&v=beta&t=eSxGSIqW9vW7rHx79J5Z7gcNrCyUGVtZEVr8-rDHh4E"
+
+df.loc[df.profileUrl == "https://www.linkedin.com/in/markussteilemann/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/C4E03AQHXgF5NlZrRqQ/profile-displayphoto-shrink_400_400/0/1616592958472?e=1674086400&v=beta&t=04uxVnwfDbkTEjJAj0qy0-Le0KuSGUNLlR8ao2SqQWQ"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/buschroland/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/C4D03AQHt7A5wyfZ62Q/profile-displayphoto-shrink_400_400/0/1649329185717?e=1674086400&v=beta&t=etoCOkPNa5G9Z8b8HJ-CQLRyjzgzlvLgy-VA-uODFT8"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/bernardlooneybp/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/C4E03AQEYAcA6GHI1VQ/profile-displayphoto-shrink_400_400/0/1626105106123?e=1674086400&v=beta&t=ahiCRCiVckr2D3VhTDATY_2b9CuxJL5sfE6T427kU_g"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/ola-k%C3%A4llenius/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/C4D03AQEmslz1nw9Xcg/profile-displayphoto-shrink_400_400/0/1643731137701?e=1674086400&v=beta&t=3M-JWsoXg7r0tHbJ7RNdb7a3q8puKcCw8FJUTBF8Hzg"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/martenbunnemann/detail/recent-activity/shares/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/C4D03AQEEFMfjUbmLsA/profile-displayphoto-shrink_400_400/0/1585913949824?e=1674086400&v=beta&t=fMWpbCEnskPus45UOQB8tjK65seeUL5bgboR5iMVVdY"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/jocheneickholt/recent-activity/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/D4D03AQE7I0g99vQF7A/profile-displayphoto-shrink_400_400/0/1664128016463?e=1674086400&v=beta&t=zGoZCh7OVXmwWWYeNGjNGy6C_WN8EyYaJuq8p2nNAcQ"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/leo-birnbaum-885347b0/detail/recent-activity/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/C4E03AQE7yP63OXfavA/profile-displayphoto-shrink_400_400/0/1643105401117?e=1674086400&v=beta&t=8lt5v2zUGpmq279UuG5ZV122YbctFKmrXn3Rqy95bB0"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/herbertdiess/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/C4D03AQGwevkEVF9SLg/profile-displayphoto-shrink_400_400/0/1604501451969?e=1674086400&v=beta&t=KfjkItv4RipG8wTO5IG7QaMFQWe3qarjOgCLSymASiU"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/mike-crawley-a3308a2/recent-activity/shares/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/C5603AQHdigGQiJWq4g/profile-displayphoto-shrink_400_400/0/1516245033117?e=1674086400&v=beta&t=W4GlchB3P4xvyjnyCIT4mGrq4mTXA6eYP2FZS5z8dSY"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/miriam-teige-66117769/recent-activity/", "profileImg"] = "https://profile-images.xing.com/images/e361dbb99b1048cc5b97668087ac9b59-5/miriam-teige.256x256.jpg"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/werner-baumann/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/C5603AQGI_4YXr7uMIA/profile-displayphoto-shrink_400_400/0/1631806128361?e=1674086400&v=beta&t=EjqN-uz3hJ7qBRIQVCLbxA4C8lJCpwesaTn3RR_TUWw"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/katherina-reiche/detail/recent-activity/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/C4D03AQFOOt3UwR4FpQ/profile-displayphoto-shrink_400_400/0/1601888597608?e=1674086400&v=beta&t=Uvd6erXkPyYJBJoEluRZKF3fcHU7drBeCUvvwFaPUas"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/jeromepecresse/?originalSubdomain=fr", "profileImg"] = "https://media-exp1.licdn.com/dms/image/C5603AQG7UwEhvr5bxw/profile-displayphoto-shrink_400_400/0/1591286963133?e=1674086400&v=beta&t=gG_d-hk4nKan7m7M8gXBnkdXtbTFk2NclmOridFbrE0"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/marc-becker-3990826/", "profileImg"] = "https://www.wfo-helgoland.eu/2017/files/2017/08/Dr.-Marc-Becker-e1501844444352-390x390.jpg"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/richardlutzdb/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/D4E03AQG6-ESIrvZGnw/profile-displayphoto-shrink_400_400/0/1667416495067?e=1674086400&v=beta&t=yWZ-GLMN7lh7Cd5BzoJAVHYK39DKDnoY1jhqdMUy-lg"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/martin-brudermueller/detail/recent-activity/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/C4E03AQHjIB2XUqA9bg/profile-displayphoto-shrink_400_400/0/1616417524648?e=1674086400&v=beta&t=G7peaOsq6pl9XKOEgAeQwS8GZ6BQdBPkHdJSPQO8VEc"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/hdsohn/recent-activity/shares/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/C4E03AQFLOYyqYyLN2g/profile-displayphoto-shrink_400_400/0/1604417604865?e=1674086400&v=beta&t=5hYyozi-rYn2Abt1z7AHrP-VHw4wO0bK8BGVPIkGvgI"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/davidcarrascosafrancis/recent-activity/shares/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/C5103AQGi0NnyRoRJPA/profile-displayphoto-shrink_400_400/0/1517228600139?e=1674086400&v=beta&t=mQWCKWusvkyvtELcqx6otmAp0P5s7XxRj89twgUGwJc"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/juan-gutierrez-sgre/recent-activity/", "profileImg"] = "https://nawindpower.com/wp-content/uploads/2020/03/Gutierrez_J-0004-scaled.jpg"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/henrik-stiesdal-064a9374/recent-activity/", "profileImg"] = "https://upload.wikimedia.org/wikipedia/commons/9/99/Henrik_Stiesdal%2C_Siemens_Windpower_Division_CTO%2C_Press_Image_2012.jpg"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/hilde-merete-aasheim-b37b38203/recent-activity/shares/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/C4E03AQHahchcmPw3pA/profile-displayphoto-shrink_400_400/0/1610534026461?e=1674086400&v=beta&t=vs0LmRvESXecSEVPGt3_aZhFSYuvuQHKVMdUVT2K8Ro"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/alistair-phillips-davies-14213871/recent-activity/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/C5603AQEGqafzcqRo2Q/profile-displayphoto-shrink_400_400/0/1612302162253?e=1674086400&v=beta&t=dl1pZ2QX-Nf5h0l17nyqaIPP8tRsRPEK3YJfSwbGQck"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/annaborgvattenfall/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/D4D03AQFH0lwTjUWnAw/profile-displayphoto-shrink_400_400/0/1666804754880?e=1674086400&v=beta&t=WoQB2g8S4Hk_C1xgmg-uApOgRE0vOSji8Wa9ZzhSjS0"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/giles-dickson-98607229/recent-activity/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/C4E03AQGhOcNb1JtCqw/profile-displayphoto-shrink_400_400/0/1645023119636?e=1674086400&v=beta&t=McqVYoA8BJK2bXyClkuytosxfjBCjYiNCGClmj_DXUc"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/jean-bernard-levy/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/C4E03AQHrXZwpUycaZg/profile-displayphoto-shrink_400_400/0/1574177430159?e=1674086400&v=beta&t=Qxn0Bsm-BoqsWHBuezA85_LFm8YgdhpUQU0od0EUMOA"
+df.loc[df.profileUrl == "https://www.linkedin.com/in/florian-bieberbach/recent-activity/shares/", "profileImg"] = "https://media-exp1.licdn.com/dms/image/C4D03AQFc9lmuT5toVw/profile-displayphoto-shrink_400_400/0/1627920577752?e=1674086400&v=beta&t=RnClEIBVElHEjoDDIBLhqeHXUps3DLJa_Gxr-xikvfs"
+
+
+
+
+
+
+
+#st.write(df.profileImg.value_counts())
 df30 = df[df['date']>=(dt.datetime.now()-dt.timedelta(days=365))] #hours = 6,12, 24
 
+if st.button('Show Data'):
+    st.write(df30)
 
-st.write(df30)
+#st.write(df30)
 st.write(df30.shape)
 #df5 = df['date'].last('24h')
 
@@ -144,131 +189,51 @@ st.header('Post from last 24 hours')
 
 df5 = df[df['date']>=(dt.datetime.now()-dt.timedelta(hours=24))] #hours = 6,12, 24
 
-cols = ['CEO','postContent','postUrl','likeCount','commentCount','Total_Interactions','postDate','profileUrl', 'imgUrl']
+cols = ['CEO','postContent','postUrl','likeCount','commentCount','Total_Interactions','postDate','profileUrl', 'imgUrl','profileImg','type']
 df5 = df5[cols]
 df5.sort_values(['Total_Interactions'], ascending=False, inplace=True)
 
 
 #df5 = df5["imgUrl"].str.replace("<NA>","https://www.citypng.com/public/uploads/preview/download-horizontal-black-line-png-31631830482cvrhyz46le.png")
 
+df5['likeCount'] = df5['likeCount'].astype(int)
+df5['commentCount'] = df5['commentCount'].astype(int)
 df5['Total_Interactions'] = df5['Total_Interactions'].astype(int)
 
 df5 = df5.reset_index(drop=True)
 
+
+
 black_image = 'https://i.imgflip.com/505yh3.png'
 
+if st.button('Show Data for past 24 Hours'):
+    st.write(df5)
+
 st.write(df5.shape)
-st.write(df5)
+#st.write(df5)
+@st.cache
+def convert_df(df):
+    # IMPORTANT: Cache the conversion to prevent computation on every rerun
+    return df.to_csv().encode('utf-8')
 
-
-
-#df5.imgUrl.fillna('https://www.citypng.com/photo/17302/download-horizontal-black-line-png')
-
-a = df5.loc[df5.CEO == df5.CEO.iloc[0]]['postContent'].to_list()
-
-b = df5.loc[df5.CEO == df5.CEO.iloc[1]]['postContent'].to_list()
-
-c = df5.loc[df5.CEO == df5.CEO.iloc[2]]['postContent'].to_list()
-
-d = df5.loc[df5.CEO == df5.CEO.iloc[3]]['postContent'].to_list()
-
-
-#a0 = df5.loc[df5.CEO == df5.CEO.iloc[0]]['imgUrl'].to_list()
-
-a1 = df5.loc[df5.CEO == df5.CEO.iloc[0]]['postUrl'].to_list()
-
-a11 = df5.loc[df5.CEO == df5.CEO.iloc[0]]['profileUrl'].to_list()
-
-a2 = df5.loc[df5.CEO == df5.CEO.iloc[0]]['Total_Interactions'].to_list()
-
-
-b0 = df5.loc[df5.CEO == df5.CEO.iloc[1]]['imgUrl'].to_list()
-b1 = df5.loc[df5.CEO == df5.CEO.iloc[1]]['postUrl'].to_list()
-
-b11 = df5.loc[df5.CEO == df5.CEO.iloc[1]]['profileUrl'].to_list()
-
-b2 = df5.loc[df5.CEO == df5.CEO.iloc[1]]['Total_Interactions'].to_list()
-
-
-c0 = df5.loc[df5.CEO == df5.CEO.iloc[2]]['imgUrl'].to_list()
-c1 = df5.loc[df5.CEO == df5.CEO.iloc[2]]['postUrl'].to_list()
-
-c11 = df5.loc[df5.CEO == df5.CEO.iloc[2]]['profileUrl'].to_list()
-
-c2 = df5.loc[df5.CEO == df5.CEO.iloc[2]]['Total_Interactions'].to_list()
-
-
-d0 = df5.loc[df5.CEO == df5.CEO.iloc[3]]['imgUrl'].to_list()
-d1 = df5.loc[df5.CEO == df5.CEO.iloc[3]]['postUrl'].to_list()
-
-d11 = df5.loc[df5.CEO == df5.CEO.iloc[3]]['profileUrl'].to_list()
-
-d2 = df5.loc[df5.CEO == df5.CEO.iloc[3]]['Total_Interactions'].to_list()
+csv = convert_df(df5)
+st.download_button(
+    label="Download data as CSV",
+    data=csv,
+    file_name='CEOS_post_past24Hr.csv',
+    mime='text/csv',
+)
 
 
 
 
-st.header('Top Four Posts in last 24 Hours')
+
+
+   
+
+
+st.header('Top Interacting Posts in last 24 Hours')
 #st.write(a)
-col1, col2, col3, col4 = st.columns(4)
-
-with col1:
-   st.subheader(df5.CEO.iloc[0])
-   #st.image("https://static.streamlit.io/examples/cat.jpg")
-   #st.write('Post Content')
-   #st.image(a0[0])
-   #st.markdown('_Post Content_ ')
-   with st.expander('Post Content'):
-        st.write(str(a[0])) #postContent
-   st.markdown('_Total Interactions for this Post:_ ') 
-   st.write(str(a2[0])) #totInteractions
-   st.markdown('_Link to this Post_ ') 
-   st.write(str(a1[0])) #profileUrl
-   st.markdown('_Link to his Profile_ ') 
-   st.write(str(a11[0])) #profileUrl
-
-with col2:
-   st.subheader(df5.CEO.iloc[1])
-   #st.image("https://static.streamlit.io/examples/dog.jpg")
-   st.image(b0[0])
-   #st.markdown('_Post Content_ ')
-   with st.expander('Post Content'):
-        st.write(str(b[0])) #postContent
-   st.markdown('_Total Interactions for this Post:_ ') 
-   st.write(str(b2[0])) #totInteractions
-   st.markdown('_Link to this Post_ ') 
-   st.write(str(b1[0])) #profileUrl
-   st.markdown('_Link to his Profile_ ') 
-   st.write(str(b11[0])) #profileUrl
-
-with col3:
-   st.subheader(df5.CEO.iloc[2])
-   #st.image("https://static.streamlit.io/examples/owl.jpg")
-   st.image(c0[0])
-   #st.markdown('_Post Content_ ')
-   with st.expander('Post Content'):
-        st.write(str(c[0])) #postContent
-   st.markdown('_Total Interactions for this Post:_ ') 
-   st.write(str(c2[0])) #totInteractions
-   st.markdown('_Link to this Post_ ') 
-   st.write(str(c1[0])) #profileUrl
-   st.markdown('_Link to his Profile_ ') 
-   st.write(str(c11[0])) #profileUrl
-
-with col4:
-   st.subheader(df5.CEO.iloc[3])
-   #st.image("https://static.streamlit.io/examples/owl.jpg")
-   st.image(d0[0])
-   #st.markdown('_Post Content_ ')
-   with st.expander('Post Content'):
-        st.write(str(d[0])) #postContent
-
-   st.markdown('_Total Interactions for this Post:_ ') 
-   st.write(str(d2[0])) #totInteractions
-   st.markdown('_Link to this Post_ ') 
-   st.write(str(d1[0])) #profileUrl
-   st.markdown('_Link to his Profile_ ') 
-   st.write(str(d11[0])) #profileUrl
 
 
 
@@ -278,25 +243,73 @@ st.subheader('Total Interactions for each CEOs : last 24hours')
 st.bar_chart(df5, x='CEO', y='Total_Interactions',use_container_width=True)
 #st.sidebar.header('Input')
 
-#pr = df.profile_report()
-#st_profile_report(pr)
-
-##st.line_chart(df.likeCount)
 
 
 
+thumbnails = st.columns(5)
 
-# "#st.line_chart(df.commentCount)
+for i,c in df5.iterrows():
+   with thumbnails[i]:
+      
+
+      if not pd.isnull(c['profileImg']):
+         st.image(c['profileImg'], width=150)
+      
+      st.subheader(df5.CEO.iloc[i])
+      if not pd.isnull(c['imgUrl']):
+         st.image(c['imgUrl'])
+      
+      
+
+      with st.expander('Post Content'):
+        st.write(c['postContent']) #postContent 
+
+      st.write('Type of Post:  ',c['type']) #totInteractions
+      
+      st.write('Total Interactions for this Post:  ',c['Total_Interactions']) #totInteractions
+
+      
+      st.write('Publish Date:  ',c['postDate']) #totInteractions
+
+      with st.expander('Link to this Post'):
+        st.write(c['postUrl']) #postContent 
+
+      with st.expander('Link to  Profile'):
+        st.write(c['profileUrl']) #postContent 
+
+  
 
 
-# option = st.selectbox(
-#      'What is your Post type?',
-#      (df.type))
-
-# st.write('Your favorite color is ', option)
 
 
-# st.write('Contents of the ./streamlit/config.toml file of this app')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
