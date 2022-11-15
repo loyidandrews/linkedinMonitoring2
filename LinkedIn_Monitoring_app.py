@@ -153,7 +153,7 @@ df5.sort_values(['Total_Interactions'], ascending=False, inplace=True)
 
 df5['Total_Interactions'] = df5['Total_Interactions'].astype(int)
 
-df5 = df5.reset_index(drop=True)
+#df5 = df5.reset_index(drop=True)
 
 black_image = 'https://i.imgflip.com/505yh3.png'
 
