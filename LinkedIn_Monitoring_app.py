@@ -148,7 +148,7 @@ cols = ['CEO','postContent','postUrl','likeCount','commentCount','Total_Interact
 df5 = df5[cols]
 df5.sort_values(['Total_Interactions'], ascending=False, inplace=True)
 
-
+df5['Total_Interactions'] = df5['Total_Interactions'].astype(int)
 #df5 = df5["imgUrl"].str.replace("<NA>","https://www.citypng.com/public/uploads/preview/download-horizontal-black-line-png-31631830482cvrhyz46le.png")
 
 black_image = 'https://i.imgflip.com/505yh3.png'
