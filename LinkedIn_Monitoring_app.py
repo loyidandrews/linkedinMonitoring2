@@ -54,7 +54,7 @@ df = pd.concat(frames)
 df = df.dropna(how='any', subset=['postContent'])
 
 
-df.drop(['viewCount', 'sharedJobUrl', 'error', 'repostCount','imgUrl'], axis=1, inplace=True)
+df.drop(['viewCount', 'sharedJobUrl', 'error', 'repostCount'], axis=1, inplace=True)
 
 
 #st.write(df.profileUrl.value_counts())
@@ -144,12 +144,21 @@ st.header('Post from last 24 hours')
 
 df5 = df[df['date']>=(dt.datetime.now()-dt.timedelta(hours=24))] #hours = 6,12, 24
 
-cols = ['CEO','postContent','postUrl','likeCount','commentCount','Total_Interactions','postDate','profileUrl']
+cols = ['CEO','postContent','postUrl','likeCount','commentCount','Total_Interactions','postDate','profileUrl', 'imgUrl']
 df5 = df5[cols]
 df5.sort_values(['Total_Interactions'], ascending=False, inplace=True)
 
+
+#df5 = df5["imgUrl"].str.replace("<NA>","https://www.citypng.com/public/uploads/preview/download-horizontal-black-line-png-31631830482cvrhyz46le.png")
+
+black_image = 'https://i.imgflip.com/505yh3.png'
+
 st.write(df5.shape)
 st.write(df5)
+
+
+
+#df5.imgUrl.fillna('https://www.citypng.com/photo/17302/download-horizontal-black-line-png')
 
 a = df5.loc[df5.CEO == df5.CEO.iloc[0]]['postContent'].to_list()
 
@@ -160,6 +169,7 @@ c = df5.loc[df5.CEO == df5.CEO.iloc[2]]['postContent'].to_list()
 d = df5.loc[df5.CEO == df5.CEO.iloc[3]]['postContent'].to_list()
 
 
+#a0 = df5.loc[df5.CEO == df5.CEO.iloc[0]]['imgUrl'].to_list()
 
 a1 = df5.loc[df5.CEO == df5.CEO.iloc[0]]['postUrl'].to_list()
 
@@ -168,6 +178,7 @@ a11 = df5.loc[df5.CEO == df5.CEO.iloc[0]]['profileUrl'].to_list()
 a2 = df5.loc[df5.CEO == df5.CEO.iloc[0]]['Total_Interactions'].to_list()
 
 
+b0 = df5.loc[df5.CEO == df5.CEO.iloc[1]]['imgUrl'].to_list()
 b1 = df5.loc[df5.CEO == df5.CEO.iloc[1]]['postUrl'].to_list()
 
 b11 = df5.loc[df5.CEO == df5.CEO.iloc[1]]['profileUrl'].to_list()
@@ -175,6 +186,7 @@ b11 = df5.loc[df5.CEO == df5.CEO.iloc[1]]['profileUrl'].to_list()
 b2 = df5.loc[df5.CEO == df5.CEO.iloc[1]]['Total_Interactions'].to_list()
 
 
+c0 = df5.loc[df5.CEO == df5.CEO.iloc[2]]['imgUrl'].to_list()
 c1 = df5.loc[df5.CEO == df5.CEO.iloc[2]]['postUrl'].to_list()
 
 c11 = df5.loc[df5.CEO == df5.CEO.iloc[2]]['profileUrl'].to_list()
@@ -182,6 +194,7 @@ c11 = df5.loc[df5.CEO == df5.CEO.iloc[2]]['profileUrl'].to_list()
 c2 = df5.loc[df5.CEO == df5.CEO.iloc[2]]['Total_Interactions'].to_list()
 
 
+d0 = df5.loc[df5.CEO == df5.CEO.iloc[3]]['imgUrl'].to_list()
 d1 = df5.loc[df5.CEO == df5.CEO.iloc[3]]['postUrl'].to_list()
 
 d11 = df5.loc[df5.CEO == df5.CEO.iloc[3]]['profileUrl'].to_list()
@@ -199,6 +212,7 @@ with col1:
    st.subheader(df5.CEO.iloc[0])
    #st.image("https://static.streamlit.io/examples/cat.jpg")
    #st.write('Post Content')
+   #st.image(a0[0])
    st.markdown('_Post Content_ ')
    st.write(str(a[0])) #postContent
    st.markdown('_Total Interactions for this Post:_ ') 
@@ -211,6 +225,7 @@ with col1:
 with col2:
    st.subheader(df5.CEO.iloc[1])
    #st.image("https://static.streamlit.io/examples/dog.jpg")
+   st.image(b0[0])
    st.markdown('_Post Content_ ')
    st.write(str(b[0]))
    st.markdown('_Total Interactions for this Post:_ ') 
@@ -223,6 +238,7 @@ with col2:
 with col3:
    st.subheader(df5.CEO.iloc[2])
    #st.image("https://static.streamlit.io/examples/owl.jpg")
+   st.image(c0[0])
    st.markdown('_Post Content_ ')
    st.write(str(c[0]))
    st.markdown('_Total Interactions for this Post:_ ') 
@@ -235,6 +251,7 @@ with col3:
 with col4:
    st.subheader(df5.CEO.iloc[3])
    #st.image("https://static.streamlit.io/examples/owl.jpg")
+   st.image(d0[0])
    st.markdown('_Post Content_ ')
    st.write(str(d[0]))
 
@@ -293,6 +310,11 @@ st.bar_chart(df5, x='CEO', y='Total_Interactions',use_container_width=True)
 #   st.info('☝️ Upload a CSV file')
 
 # "
+
+
+  
+
+
 
 
   
