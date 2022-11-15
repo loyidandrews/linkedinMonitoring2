@@ -256,7 +256,7 @@ with col3:
    st.write(str(c11[0])) #profileUrl
 
 with col4:
-   st.subheader(df5.CEO.iloc[4])
+   st.subheader(df5.CEO.iloc[3])
    #st.image("https://static.streamlit.io/examples/owl.jpg")
    st.image(d0[0])
    #st.markdown('_Post Content_ ')
