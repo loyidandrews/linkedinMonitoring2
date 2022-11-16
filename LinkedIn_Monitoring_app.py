@@ -3,6 +3,8 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
+from st_aggrid import AgGrid
+
 #import pandas_profiling
 #from streamlit_pandas_profiling import st_profile_report
 
@@ -10,14 +12,17 @@ from datetime import datetime,timedelta
 import pytz
 import re
 
-# with open('style.css') as f:
-#     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
 
 st.set_page_config(layout="wide")
 
+
+with open('style.css') as f:
+    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
 import time
 
-#st.sidebar.success("Select a page above")
+st.sidebar.success("Choose Category")
 
 
 st.image(
@@ -173,18 +178,23 @@ df.loc[df.profileUrl == "https://www.linkedin.com/in/florian-bieberbach/recent-a
 #st.write(df.profileImg.value_counts())
 df30 = df[df['date']>=(dt.datetime.now()-dt.timedelta(days=365))] #hours = 6,12, 24
 
+#AgGrid(df30, height=500, fit_columns_on_grid_load=True)
+
 if st.button('Show Data'):
-    st.write(df30)
+    AgGrid(df30, height=500, fit_columns_on_grid_load=True)
 
 #st.write(df30)
 st.write(df30.shape)
 #df5 = df['date'].last('24h')
 
-st.subheader('No of Posts for each CEO from last 12 Months')
+st.subheader('No of Posts for each CEOs from last 12 Months')
 
 
 
-st.write(df30.CEO.value_counts())
+#st.write(df30.CEO.value_counts())
+
+df12 = df30['CEO'].value_counts()
+st.bar_chart(df12)
 
 number = st.number_input('Select the days you want to see the posts', min_value=1, max_value=10, value=1, step=1)
 #st.write('The current number is ', number)
@@ -249,39 +259,58 @@ st.subheader(f'Total Interactions for each CEOs : last {int(number)} days')
 st.bar_chart(df5, x='CEO', y='Total_Interactions',use_container_width=True)
 #st.sidebar.header('Input')
 
-st.header(f'Top Interacting Posts in last {int(number)} days')
+st.header(f'Top Five Interacting Posts in last {int(number)} days')
 
 
-thumbnails = st.columns(5)
+#defining three side-by-side columns
 
-for i,c in df5.iterrows():
-   with thumbnails[i]:
-      
+#col1, col2, col3 = st.columns(3)
 
-      if not pd.isnull(c['profileImg']):
-         st.image(c['profileImg'], width=150)
-      
-      st.subheader(df5.CEO.iloc[i])
-      if not pd.isnull(c['imgUrl']):
-         st.image(c['imgUrl'])
-      
-      
 
-      with st.expander('Post Content'):
-        st.write(c['postContent']) #postContent 
 
-      st.write('Type of Post:  ',c['type']) #totInteractions
-      
-      st.write('Total Interactions for this Post:  ',c['Total_Interactions']) #totInteractions
+num_posts = df5.shape[0]
 
-      
-      st.write('Publish Date:  ',c['postDate']) #totInteractions
+if  num_posts>0:
 
-      with st.expander('Link to this Post'):
-        st.write(c['postUrl']) #postContent 
+     #splits = np.array_split(df5,5)
+     splits = df5.groupby(df5.index // 4)
+     for _, frames in splits:
+          frames = frames.reset_index(drop=True)
+          print(frames.head())
+          thumbnails = st.columns(frames.shape[0])
+          for i, c in frames.iterrows():
+               with thumbnails[i]:
 
-      with st.expander('Link to  Profile'):
-        st.write(c['profileUrl']) #postContent 
+                    if not pd.isnull(c['profileImg']):
+                        st.image(c['profileImg'], width=150)
+                    st.subheader(frames.CEO[i])
+                    
+                       
+
+                    with st.expander('Post Content'):
+                         st.write(c['postContent'])  #postContent
+                    st.write('Type of Post:  ',c['type']) #postType
+                    st.write('Total Interactions for this Post:  ',c['Total_Interactions']) #totInteractions
+                    st.write('Publish Date:  ',c['postDate']) #publishDate
+                    with st.expander('Link to this Post'):
+                        st.write(c['postUrl']) #linktoPost
+                    with st.expander('Link to  Profile'):
+                        st.write(c['profileUrl']) #linktoProfile
+                    if not pd.isnull(c['imgUrl']):
+                        st.image(c['imgUrl'])
+                        st.write('Image from the Post')
+                    
+else:
+     st.write('Tut mir sehr sehr leid. No new post in last 24 hours.')
+
+
+
+
+
+
+
+
+
 # else:
 #     st.image(
 #     "https://image.similarpng.com/very-thumbnail/2021/04/Sad-Emoji-face-on-transparent-background-PNG.png",
@@ -310,7 +339,19 @@ for i,c in df5.iterrows():
 
 
 
+# #defining three side-by-side columns
 
+# col1, col2, col3 = st.columns(3)
+
+
+
+# #adding elements to each column, in this case- different metrics
+
+# col1.metric("Temperature", "20 °C", "-1 °C")
+
+# col2.metric("Cost", "$ 9200", "-8%", delta_color="inverse")
+
+# col3.metric("Humidity", "89%", "3%")
 
 
 
