@@ -17,7 +17,7 @@ st.set_page_config(layout="wide")
 
 import time
 
-#st.sidebar.success("Select a page above")
+st.sidebar.success("Select Category")
 
 
 st.image(
