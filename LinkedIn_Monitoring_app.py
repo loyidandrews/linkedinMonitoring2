@@ -212,7 +212,7 @@ df5 = df5.reset_index(drop=True)
 
 black_image = 'https://i.imgflip.com/505yh3.png'
 
-if st.button('Show Data for past 24 Hours'):
+if st.button(f'Show Data for past {int(number)} days'):
     st.write(df5)
 
 st.write(df5.shape)
