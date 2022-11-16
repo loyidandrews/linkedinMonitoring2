@@ -276,8 +276,13 @@ for i,c in df5.iterrows():
 
       with st.expander('Link to  Profile'):
         st.write(c['profileUrl']) #postContent 
-
-  
+else:
+    st.image(
+    "https://static8.depositphotos.com/1431107/919/i/600/depositphotos_9199988-stock-photo-oops-icon.jpg",
+    width=250,
+     )
+    
+    st.write('Ohh.. No Posts found in defined time range Please check after some time')
 
 
 
