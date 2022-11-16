@@ -17,7 +17,7 @@ st.set_page_config(layout="wide")
 
 import time
 
-st.sidebar.success("Select Category")
+#st.sidebar.success("Select a page above")
 
 
 st.image(
@@ -181,13 +181,19 @@ st.write(df30.shape)
 #df5 = df['date'].last('24h')
 
 st.subheader('No of Posts for each CEO from last 12 Months')
+
+
+
 st.write(df30.CEO.value_counts())
 
-st.header('Post from last 24 hours')
+number = st.number_input('Select the days you want to see the posts', min_value=1, max_value=10, value=1, step=1)
+#st.write('The current number is ', number)
+
+st.header(f'Post from last {int(number)} days')
 
 
 
-df5 = df[df['date']>=(dt.datetime.now()-dt.timedelta(hours=24))] #hours = 6,12, 24
+df5 = df[df['date']>=(dt.datetime.now()-dt.timedelta(days=number))] #hours = 6,12, 24
 
 cols = ['CEO','postContent','postUrl','likeCount','commentCount','Total_Interactions','postDate','profileUrl', 'imgUrl','profileImg','type']
 df5 = df5[cols]
@@ -232,18 +238,18 @@ st.download_button(
    
 
 
+
 #st.write(a)
 
 
 
 
-st.subheader('Total Interactions for each CEOs : last 24hours')
+st.subheader(f'Total Interactions for each CEOs : last {int(number)} days')
 #x = df5.plot(kind='bar', x='CEO', y='Total_Interactions', figsize=(20,10), ylabel='View Counts')
 st.bar_chart(df5, x='CEO', y='Total_Interactions',use_container_width=True)
 #st.sidebar.header('Input')
 
-
-st.header('Top Interacting Posts in last 24 Hours')
+st.header(f'Top Interacting Posts in last {int(number)} days')
 
 
 thumbnails = st.columns(5)
@@ -278,11 +284,13 @@ for i,c in df5.iterrows():
         st.write(c['profileUrl']) #postContent 
 # else:
 #     st.image(
-#     "https://static8.depositphotos.com/1431107/919/i/600/depositphotos_9199988-stock-photo-oops-icon.jpg",
-#     width=180,
+#     "https://image.similarpng.com/very-thumbnail/2021/04/Sad-Emoji-face-on-transparent-background-PNG.png",
+#     width=150,
 #      )
     
 #     st.write('Ohh.. No Posts found in defined time range Please check after some time')
+
+  
 
 
 
