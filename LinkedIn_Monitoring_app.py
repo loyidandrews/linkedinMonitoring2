@@ -196,7 +196,7 @@ st.subheader('No of Posts for each CEOs from last 12 Months')
 df12 = df30['CEO'].value_counts()
 st.bar_chart(df12)
 
-number = st.number_input('Select the days you want to see the posts', min_value=1, max_value=31, value=1, step=1)
+number = st.number_input('How many days old data you want to see?', min_value=1, max_value=31, value=1, step=1)
 #st.write('The current number is ', number)
 
 st.header(f'Post from last {int(number)} days')
@@ -259,7 +259,7 @@ st.subheader(f'Total Interactions for each CEOs : last {int(number)} days')
 st.bar_chart(df5, x='CEO', y='Total_Interactions',use_container_width=True)
 #st.sidebar.header('Input')
 
-st.header(f'Top Five Interacting Posts in last {int(number)} days')
+st.header(f'Top Interacting Posts in last {int(number)} days')
 
 
 #defining three side-by-side columns
