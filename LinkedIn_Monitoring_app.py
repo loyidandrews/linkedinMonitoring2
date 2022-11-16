@@ -3,7 +3,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
-from st_aggrid import AgGrid
+#from st_aggrid import AgGrid
 
 #import pandas_profiling
 #from streamlit_pandas_profiling import st_profile_report
@@ -181,7 +181,7 @@ df30 = df[df['date']>=(dt.datetime.now()-dt.timedelta(days=365))] #hours = 6,12,
 #AgGrid(df30, height=500, fit_columns_on_grid_load=True)
 
 if st.button('Show Data'):
-    AgGrid(df30, height=500, fit_columns_on_grid_load=True)
+   st.write(df30)
 
 #st.write(df30)
 st.write(df30.shape)
