@@ -305,7 +305,7 @@ else:
      st.subheader(f'Oops... No new post found in last {int(number)} days.')
 st.header('')
 st.header('')
-st.header('_________________________________________________________________________________________________')
+st.st.header('_____________________________________________')
 st.header('')
 
 
