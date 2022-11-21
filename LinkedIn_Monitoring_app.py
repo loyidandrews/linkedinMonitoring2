@@ -301,6 +301,79 @@ if  num_posts>0:
                         st.write('Image from the Post')
                     
 else:
+     st.image('https://img.freepik.com/premium-vector/hazard-warning-attention-sign-with-exclamation-mark-symbol-white_231786-5218.jpg?w=2000', width =200)
+     st.subheader(f'Oops... No new post found in last {int(number)} days.')
+st.header('')
+st.header('')
+st.header('_________________________________________________________________________________________________')
+st.header('')
+
+
+st.header('Select CEO to see all their posts in last 1 year')
+
+makes = df30['CEO'].drop_duplicates()
+make_choice = st.selectbox('Select CEO from list:', makes)
+
+#st.write(make_choice)
+df30.rename(columns={'Total_Interactions': 'Total Interactions'}, inplace=True)
+
+df_CEO = df30.loc[df30.CEO == make_choice]
+
+df_CEO = df_CEO.reset_index(drop=True)
+
+
+st.image(df_CEO.profileImg[0], width=200)
+#st.write(df_CEO.to_html(escape=False, index=False), unsafe_allow_html=True)
+
+df_CEO.sort_values(['postDate'], ascending=False, inplace=True)
+
+
+
+
+st.subheader(f'Total Interactions for each posts of {make_choice}')
+
+st.area_chart(df_CEO, x='postDate', y='Total Interactions',use_container_width=True)
+
+st.subheader(f'Posts from {make_choice} in last year')
+
+
+
+num_posts_1 = df_CEO.shape[0]
+
+if  num_posts_1>0:
+    
+     #splits = np.array_split(df5,5)
+     #st.image(df_CEO.profileImg[0])
+     splits_1 = df_CEO.groupby(df_CEO.index // 4)
+     for _, frames_1 in splits_1:
+          frames_1 = frames_1.reset_index(drop=True)
+          #print(frames_1.head())
+          thumbnails_1 = st.columns(frames_1.shape[0])
+          for i, c in frames_1.iterrows():
+               with thumbnails_1[i]:
+
+                    # if not pd.isnull(c['profileImg']):
+                    #     st.image(c['profileImg'], width=150)
+                    # st.subheader(frames_1.CEO[i])
+                    
+                       
+                    st.write('Publish Date:  ',c['postDate']) #publishDate
+                    if not pd.isnull(c['imgUrl']):
+                        st.image(c['imgUrl'])
+                        st.write('Image from the Post', width=150)
+                    with st.expander('Post Content'):
+                         st.write(c['postContent'])  #postContent
+                    st.write('Type of Post:  ',c['type']) #postType
+                    st.write('Total Interactions for this Post:  ',c['Total Interactions']) #totInteractions
+                    
+                    with st.expander('Link to this Post'):
+                        st.write(c['postUrl']) #linktoPost
+                    with st.expander('Link to  Profile'):
+                        st.write(c['profileUrl']) #linktoProfile
+                    
+                    
+else:
+     
      st.write('Tut mir sehr sehr leid. No new post in last 24 hours.')
 
 
