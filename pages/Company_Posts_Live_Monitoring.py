@@ -217,7 +217,7 @@ if st.button(f'Show Data for past {int(number)} days'):
 #st.write(f'Number of posts in last {int(number)} days: ', df5.shape[0])
 
 col3, col4 = st.columns(2)
-col3.metric(f'Number of posts in last {int(number)} days: ', df5.shape[0])
+col3.metric(f'Number of posts in last {int(number)} days: ',"", df5.shape[0])
 #col4.metric(f'Number of Posts in last one year: ', df_CEO.shape[0])
 
 
