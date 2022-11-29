@@ -289,6 +289,7 @@ if  num_posts>0:
                     st.write('Total Interactions 📈:  ',c['Total_Interactions']) #totInteractions
                     st.write('Likes 👍:  ',c['likeCount']) #totInteractions
                     st.write('Comments 💬:  ',c['commentCount']) #totInteractions
+                    st.write('Repost Count 💬:  ',c['repostCount']) #totInteractions
                     st.write('Action 📌:  ',c['action']) #totInteractions
                     st.write('Publish Date & Time 📆:         ',c['postDate']) #publishDate
                     with st.expander('Link to this Post 📮'):
@@ -488,6 +489,7 @@ if  num_posts_1>0:
                     st.write('Total Interactions  📈:  ',c['Total Interactions']) #totInteractions
                     st.write('Likes 👍:  ',c['likeCount']) #totInteractions
                     st.write('Comments 💬:  ',c['commentCount']) #totInteractions
+                    st.write('Repost Count 💬:  ',c['repostCount']) #totInteractions
                     st.write('Action  📌:  ',c['action']) #totInteractions
                     
                     with st.expander('Link to this Post  📮'):
