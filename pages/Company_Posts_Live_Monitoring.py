@@ -3,7 +3,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
-from st_aggrid import AgGrid
+#from st_aggrid import AgGrid
 
 #import pandas_profiling
 #from streamlit_pandas_profiling import st_profile_report
