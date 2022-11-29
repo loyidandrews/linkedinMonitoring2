@@ -185,7 +185,7 @@ st.bar_chart(df12)
 # date_to_monitor = st.date_input('Choose a date to see the post that created after that',value=datetime.today() - timedelta(days=1))
 # st.write(date_to_monitor)
 
-number = st.number_input('Select the days you want to see the posts', min_value=1, max_value=360, value=1, step=1)
+number = st.number_input('Select the days you want to see the posts', min_value=1, max_value=360, value=2, step=1)
 #st.write('The current number is ', number)
 
 st.header(f'Post from last {int(number)} days')
