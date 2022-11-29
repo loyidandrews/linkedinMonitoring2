@@ -12,8 +12,8 @@ from datetime import datetime,timedelta
 import pytz
 import re
 
-pip install germansentiment
-from germansentiment import SentimentModel
+
+#from germansentiment import SentimentModel
 
 st.set_page_config(layout="wide")
 
