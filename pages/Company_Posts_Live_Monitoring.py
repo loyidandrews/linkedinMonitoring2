@@ -160,7 +160,7 @@ df30 = df[df['date']>=(dt.datetime.now()-dt.timedelta(days=365))] #hours = 6,12,
 df30['likeCount'] = df30['likeCount'].astype(int)
 df30['commentCount'] = df30['commentCount'].astype(int)
 df30['Total_Interactions'] = df30['Total_Interactions'].astype(int)
-df30['repostCount'] = df30['repostCount'].astype(int)
+#df30['repostCount'] = df30['repostCount'].astype(int)
 
 
 #st.write(df30.head())
