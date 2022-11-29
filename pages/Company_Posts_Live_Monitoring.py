@@ -96,7 +96,7 @@ df.loc[df.profileUrl == "https://www.linkedin.com/company/edf/", "Company"] = "E
 df.loc[df.profileUrl == "https://www.linkedin.com/company/vattenfall/", "Company"] = "Vattenfall"
 df.loc[df.profileUrl == "https://www.linkedin.com/company/nextera-energy-inc/", "Company"] = "NextEra Energy, Inc."
 
-
+df['repostCount'] = df['repostCount'].astype(int)
 
 
 def getActualDate(url):
@@ -161,7 +161,7 @@ df30 = df[df['date']>=(dt.datetime.now()-dt.timedelta(days=365))] #hours = 6,12,
 df30['likeCount'] = df30['likeCount'].astype(int)
 df30['commentCount'] = df30['commentCount'].astype(int)
 df30['Total_Interactions'] = df30['Total_Interactions'].astype(int)
-df30['repostCount'] = df30['repostCount'].astype(int)
+
 
 
 #st.write(df30.head())
