@@ -1,5 +1,3 @@
-pip install requirements.txt
-
 import numpy as np
 import altair as alt
 import pandas as pd
