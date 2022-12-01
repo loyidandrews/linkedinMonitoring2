@@ -3,7 +3,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
-#from st_aggrid import AgGrid
+from st_aggrid import AgGrid
 
 #import pandas_profiling
 #from streamlit_pandas_profiling import st_profile_report
@@ -12,8 +12,7 @@ from datetime import datetime,timedelta
 import pytz
 import re
 
-
-#from germansentiment import SentimentModel
+from germansentiment import SentimentModel
 
 st.set_page_config(layout="wide")
 
@@ -73,7 +72,6 @@ df =pd.read_csv('https://phantombuster.s3.amazonaws.com/UhrenaxfEnY/oxZonAvAoy7d
 #df = pd.concat(frames)
 
 df = df.dropna(how='any', subset=['postContent'])
-df = df.dropna(how='any', subset=['repostCount'])
 
 
 df.drop(['viewCount'], axis=1, inplace=True)
@@ -96,7 +94,7 @@ df.loc[df.profileUrl == "https://www.linkedin.com/company/edf/", "Company"] = "E
 df.loc[df.profileUrl == "https://www.linkedin.com/company/vattenfall/", "Company"] = "Vattenfall"
 df.loc[df.profileUrl == "https://www.linkedin.com/company/nextera-energy-inc/", "Company"] = "NextEra Energy, Inc."
 
-df['repostCount'] = df['repostCount'].astype(int)
+
 
 
 def getActualDate(url):
@@ -290,7 +288,6 @@ if  num_posts>0:
                     st.write('Total Interactions 📈:  ',c['Total_Interactions']) #totInteractions
                     st.write('Likes 👍:  ',c['likeCount']) #totInteractions
                     st.write('Comments 💬:  ',c['commentCount']) #totInteractions
-                    st.write('Repost Count :  ',c['repostCount']) #totInteractions
                     st.write('Action 📌:  ',c['action']) #totInteractions
                     st.write('Publish Date & Time 📆:         ',c['postDate']) #publishDate
                     with st.expander('Link to this Post 📮'):
@@ -342,112 +339,112 @@ st.area_chart(df_CEO, x='postDate', y='Total Interactions',use_container_width=T
 
 
 
-# st.set_option('deprecation.showPyplotGlobalUse', False)
-# from wordcloud import WordCloud
-# import collections
-# import matplotlib.pyplot as plt
-# import spacy
-# from spacy.lang.de.examples import sentences
+st.set_option('deprecation.showPyplotGlobalUse', False)
+from wordcloud import WordCloud
+import collections
+import matplotlib.pyplot as plt
+import spacy
+from spacy.lang.de.examples import sentences
 
-# import nltk
-# from nltk.corpus import stopwords
+import nltk
+from nltk.corpus import stopwords
 
-# stop_words = nltk.corpus.stopwords.words('english', 'german')
+stop_words = nltk.corpus.stopwords.words('english', 'german')
 
-# nlp = spacy.load('en_core_web_sm', disable = ['parser','ner'])
-# doc = nlp(sentences[0])
+nlp = spacy.load('en_core_web_sm', disable = ['parser','ner'])
+doc = nlp(sentences[0])
 
-# st.subheader('Select WordCloud')
-# tab1, tab2 = st.tabs(["Hashtgs", "Adjectives"])
+st.subheader('Select WordCloud')
+tab1, tab2 = st.tabs(["Hashtgs", "Adjectives"])
 
-# with tab1:
+with tab1:
    
-#    df_CEO['hash_tags'] = df_CEO['postContent'].str.findall(r'#.*?(?=\s|$)')
-#     #st.write(df_CEO['hash_tags'])
-#    hashtags = df_CEO.hash_tags.tolist()
-#    hashtags = [item for sublist in hashtags for item in sublist]
-#    hashtags = [str(x) for x in hashtags ]
-#    counter = collections.Counter(hashtags)
-#    def my_tf_color_func(dictionary):
-#     def my_tf_color_func_inner(word, font_size, position, orientation, random_state=None, **kwargs):
-#         return "hsl(%d, 50%%, 50%%)" % (240 * dictionary[word])
-#     return my_tf_color_func_inner
-#    def black_color_func(word, font_size, position, orientation, random_state=None, **kwargs):
-#             return("hsl(0,100%, 100%)")
-#             #return("hsl(0,100%, %)")
+   df_CEO['hash_tags'] = df_CEO['postContent'].str.findall(r'#.*?(?=\s|$)')
+    #st.write(df_CEO['hash_tags'])
+   hashtags = df_CEO.hash_tags.tolist()
+   hashtags = [item for sublist in hashtags for item in sublist]
+   hashtags = [str(x) for x in hashtags ]
+   counter = collections.Counter(hashtags)
+   def my_tf_color_func(dictionary):
+    def my_tf_color_func_inner(word, font_size, position, orientation, random_state=None, **kwargs):
+        return "hsl(%d, 50%%, 50%%)" % (240 * dictionary[word])
+    return my_tf_color_func_inner
+   def black_color_func(word, font_size, position, orientation, random_state=None, **kwargs):
+            return("hsl(0,100%, 100%)")
+            #return("hsl(0,100%, %)")
 
-#    most_common = counter.most_common(50)
-#    most_common = dict(most_common)
-#    adjs = most_common.keys()
-#    count = most_common.values()
-#    adj = {'Adjectives': adjs, 'Frequency': count}
-#    adj_df = pd.DataFrame(adj)
-#     #adj_df.to_csv('top_adjectives.csv', index=False)
+   most_common = counter.most_common(50)
+   most_common = dict(most_common)
+   adjs = most_common.keys()
+   count = most_common.values()
+   adj = {'Adjectives': adjs, 'Frequency': count}
+   adj_df = pd.DataFrame(adj)
+    #adj_df.to_csv('top_adjectives.csv', index=False)
         
         
-#    cloud = WordCloud(width=3000, height=2000, background_color='#273346')
-#    cloud.generate_from_frequencies(most_common)
-#    cloud.recolor(color_func=black_color_func)
+   cloud = WordCloud(width=3000, height=2000, background_color='#273346')
+   cloud.generate_from_frequencies(most_common)
+   cloud.recolor(color_func=black_color_func)
 
-#    fig, ax = plt.subplots(figsize = (10, 4))
-#    ax.imshow(cloud)
-#     #plt.figure(figsize=[5,5])
-#    plt.axis("off")
-#    st.header("Most Frequent Used Hashtags")
-#    #plt.savefig('hastag_.svg', bbox_inches='tight')
+   fig, ax = plt.subplots(figsize = (10, 4))
+   ax.imshow(cloud)
+    #plt.figure(figsize=[5,5])
+   plt.axis("off")
+   st.header("Most Frequent Used Hashtags")
+   #plt.savefig('hastag_.svg', bbox_inches='tight')
     
 
-#     #fig = plt.imshow(cloud, interpolation="bilinear")
-#    st.pyplot(fig)
+    #fig = plt.imshow(cloud, interpolation="bilinear")
+   st.pyplot(fig)
 
-# with tab2:
+with tab2:
    
-#    df_CEO.dropna(how='any',subset=['postContent'],inplace=True)
-#    df_CEO.reset_index(drop=True,inplace=True)
-#    def remove_stopwords(text):
-#     words = [word for word in text.split() if word not in stop_words]
-#     return ' '.join(words)
-#    def removePunkt(text):
-#     words = [word for word in text.split() if word.isalnum()]
-#     return ' '.join(words)
-#    df_CEO.postContent = df_CEO.postContent.apply(removePunkt)
-#    df_CEO.postContent = df_CEO.postContent.apply(remove_stopwords)
-#    df_CEO.postContent= df_CEO.postContent.apply(lambda x: (' ').join([word for word in x.split() if len(word)>4]))
+   df_CEO.dropna(how='any',subset=['postContent'],inplace=True)
+   df_CEO.reset_index(drop=True,inplace=True)
+   def remove_stopwords(text):
+    words = [word for word in text.split() if word not in stop_words]
+    return ' '.join(words)
+   def removePunkt(text):
+    words = [word for word in text.split() if word.isalnum()]
+    return ' '.join(words)
+   df_CEO.postContent = df_CEO.postContent.apply(removePunkt)
+   df_CEO.postContent = df_CEO.postContent.apply(remove_stopwords)
+   df_CEO.postContent= df_CEO.postContent.apply(lambda x: (' ').join([word for word in x.split() if len(word)>4]))
    
-#    df_CEO['Adjectives'] = df_CEO.postContent.apply(lambda x : [token.lemma_ for token in nlp(x) if token.pos_ in ['ADJ']])
-#    #st.write(df_CEO['Adjectives'])
-#    adjectives = df_CEO.Adjectives.tolist()
-#    adjectives = [item for sublist in adjectives for item in sublist]
-#    adjectives = [str(x) for x in adjectives ]
+   df_CEO['Adjectives'] = df_CEO.postContent.apply(lambda x : [token.lemma_ for token in nlp(x) if token.pos_ in ['ADJ']])
+   #st.write(df_CEO['Adjectives'])
+   adjectives = df_CEO.Adjectives.tolist()
+   adjectives = [item for sublist in adjectives for item in sublist]
+   adjectives = [str(x) for x in adjectives ]
    
-#    counter1 = collections.Counter(adjectives)
+   counter1 = collections.Counter(adjectives)
 
 
-#    most_common1 = counter1.most_common(50)
-#    most_common1 = dict(most_common1)
-#    adjs1 = most_common1.keys()
-#    count1 = most_common1.values()
-#    #adj = {'Adjectives': adjs, 'Frequency': count}
-#    #adj_df = pd.DataFrame(adj)
-#    #adj_df.to_csv('top_adjectives.csv', index=False)
+   most_common1 = counter1.most_common(50)
+   most_common1 = dict(most_common1)
+   adjs1 = most_common1.keys()
+   count1 = most_common1.values()
+   #adj = {'Adjectives': adjs, 'Frequency': count}
+   #adj_df = pd.DataFrame(adj)
+   #adj_df.to_csv('top_adjectives.csv', index=False)
    
-#    cloud1 = WordCloud(width=3000, height=2000, background_color='#273346', color_func=my_tf_color_func(most_common1))
+   cloud1 = WordCloud(width=3000, height=2000, background_color='#273346', color_func=my_tf_color_func(most_common1))
 
-#    cloud1.generate_from_frequencies(most_common1)
-#    cloud1.recolor(color_func=black_color_func)
+   cloud1.generate_from_frequencies(most_common1)
+   cloud1.recolor(color_func=black_color_func)
    
-#    fig1, ax1 = plt.subplots(figsize = (10, 4))
-#    ax1.imshow(cloud1)
-#     #plt.figure(figsize=[5,5])
-#    plt.axis("off")
-#    st.header("Most Frequent Used Adjectives")
+   fig1, ax1 = plt.subplots(figsize = (10, 4))
+   ax1.imshow(cloud1)
+    #plt.figure(figsize=[5,5])
+   plt.axis("off")
+   st.header("Most Frequent Used Adjectives")
     
 
-#     #fig = plt.imshow(cloud, interpolation="bilinear")
-#    st.pyplot(fig1)
+    #fig = plt.imshow(cloud, interpolation="bilinear")
+   st.pyplot(fig1)
 
 
-# plt.imshow(cloud, interpolation="bilinear")
+plt.imshow(cloud, interpolation="bilinear")
 
 
 
@@ -490,7 +487,6 @@ if  num_posts_1>0:
                     st.write('Total Interactions  📈:  ',c['Total Interactions']) #totInteractions
                     st.write('Likes 👍:  ',c['likeCount']) #totInteractions
                     st.write('Comments 💬:  ',c['commentCount']) #totInteractions
-                    st.write('Repost Count :  ',c['repostCount']) #totInteractions
                     st.write('Action  📌:  ',c['action']) #totInteractions
                     
                     with st.expander('Link to this Post  📮'):
