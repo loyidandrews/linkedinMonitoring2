@@ -2,7 +2,7 @@ import numpy as np
 import altair as alt
 import pandas as pd
 import streamlit as st
-import plotly.express as px
+#import plotly.express as px
 #from st_aggrid import AgGrid
 
 #import pandas_profiling
