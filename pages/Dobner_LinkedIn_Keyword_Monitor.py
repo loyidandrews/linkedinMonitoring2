@@ -63,7 +63,7 @@ for percent_complete in range(100):
 
 
 
-df =pd.read_csv('https://phantombuster.s3.amazonaws.com/UhrenaxfEnY/R7jpZMmKrJJJDoWyI7Ee5g/result.csv')
+df =pd.read_csv('https://phantombuster.s3.amazonaws.com/UhrenaxfEnY/R7jpZMmKrJJJDoWyI7Ee5g/dobner_keyword_monitor.csv')
 #df2 =pd.read_csv('https://phantombuster.s3.amazonaws.com/UhrenaxfEnY/FtuNWKMJKVUySGlR1lVmDg/live_windenergie.csv')
 #df3 =pd.read_csv('https://phantombuster.s3.amazonaws.com/UhrenaxfEnY/JUeq71McCykmR5ZrlZTJdQ/Andere_CEOs_3.csv')
 
@@ -148,6 +148,9 @@ df.loc[(df['query']) == "https://www.linkedin.com/search/results/content/?datePo
 df.loc[(df['query']) == "https://www.linkedin.com/search/results/content/?datePosted=%22past-24h%22&keywords=grundsteuer&origin=GLOBAL_SEARCH_HEADER&sid=SUA&sortBy=%22date_posted%22", "Keyword"] = "Grundsteuer"
 df.loc[(df['query']) == "https://www.linkedin.com/search/results/content/?datePosted=%22past-24h%22&keywords=ELSTER&origin=GLOBAL_SEARCH_HEADER&sid=GJC&sortBy=%22date_posted%22", "Keyword"] = "ELSTER"
 
+df.loc[(df['query']) == "https://www.linkedin.com/search/results/content/?datePosted=%22past-month%22&keywords=Finanzamt&origin=FACETED_SEARCH&sid=2VO&sortBy=%22date_posted%22", "Keyword"] = "Finanzamt"
+df.loc[(df['query']) == "https://www.linkedin.com/search/results/content/?datePosted=%22past-month%22&keywords=Steuerrecht&origin=GLOBAL_SEARCH_HEADER&sid=*C.&sortBy=%22date_posted%22", "Keyword"] = "Steuerrecht"
+
 df13 = df['Keyword'].value_counts()
 #st.write(df13)
 
@@ -155,7 +158,7 @@ df13 = df['Keyword'].value_counts()
 
 st.header("Choose Keyword to Search")
 
-tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["All", "Steuer", "ELSTER", "Grundsteuer", "Erbschaftssteuer", "Search for a Keyword Inside Posts"])
+tab1, tab2, tab3, tab4, tab5, tab6,tab7, tab8, tab9, tab10, tab11, tab12, tab13, tab14 = st.tabs(["All", "Steuer", "ELSTER", "Grundsteuer", "Erbschaftssteuer", "Steuerrecht", "Finanzamt", "Internationales","Übererwerbsteuer","tax law", "Search for a Keyword Inside Posts","Rainer Holznagel","Christian Lindner","Dr. Dominik Benner"])
 
 df_all = df
 df_renew = df.loc[df.Keyword == 'Steuer']
@@ -167,6 +170,12 @@ df_gru = df.loc[df.Keyword == 'Grundsteuer']
 df_gru = df_gru.reset_index(drop=True)
 df_erb = df.loc[df.Keyword == 'Erbschaftssteuer']
 df_erb = df_erb.reset_index(drop=True)
+
+df_Steuerrecht = df.loc[df.Keyword == 'Steuerrecht']
+df_Steuerrecht = df_Steuerrecht.reset_index(drop=True)
+
+df_fin = df.loc[df.Keyword == 'Finanzamt']
+df_fin = df_fin.reset_index(drop=True)
 
 
 df_all['Hour'] = pd.to_datetime(df_all.postDate).dt.strftime("%H")
@@ -182,7 +191,7 @@ with tab1:
    if st.button('Show All Data'):
       st.write(df_all)
 
-   df_all = df_all[df_all['date']>=(dt.datetime.now()-dt.timedelta(days=5))] #hours = 6,12, 24
+   df_all = df_all[df_all['date']>=(dt.datetime.now()-dt.timedelta(days=1))] #hours = 6,12, 24
    st.write(f'Total posts found in last Hours: ', df_all.shape[0])
    st.subheader('Total Interaction getting in past hours in the day')
    st.bar_chart(df_all, x='Hour', y='Total Interactions')
@@ -581,8 +590,203 @@ with tab5:
             st.image('https://img.freepik.com/premium-vector/hazard-warning-attention-sign-with-exclamation-mark-symbol-white_231786-5218.jpg?w=2000', width =200)
             st.subheader('Oops... No new post found in last Hours.')
 
-
 with tab6:
+
+   if st.button('Show Data with Keyword Steuerrecht'):
+      st.write(df_Steuerrecht)
+
+   df_Steuerrecht = df_Steuerrecht[df_Steuerrecht['date']>=(dt.datetime.now()-dt.timedelta(days=1))] #hours = 6,12, 24
+   st.write(f'Total posts found in last Hours: ', df_Steuerrecht.shape[0])
+   st.subheader('Total Interaction getting in past hours in the day')
+   #st.bar_chart(df_Steuerrecht, x='Hour', y='Total Interactions')
+
+   st.header(f'Top Interacting Posts today')
+   df_Steuerrecht.sort_values(['Total Interactions'], ascending=False, inplace=True)
+   df_Steuerrecht = df_Steuerrecht.reset_index(drop=True)
+   #df_gru_100 = df_gru_100.head(10)
+   num_posts = df_Steuerrecht.shape[0]
+
+   if  num_posts>0:
+
+     #splits = np.array_split(df5,5)
+     splits = df_Steuerrecht.groupby(df_Steuerrecht.index // 3)
+     for _, frames in splits:
+          frames = frames.reset_index(drop=True)
+          #print(frames.head())
+          thumbnails = st.columns(frames.shape[0])
+          for i, c in frames.iterrows():
+               with thumbnails[i]:
+
+                    if not pd.isnull(c['profileImgUrl']):
+                        st.image(c['profileImgUrl'], width=150)
+                    if not pd.isnull(c['profileUrl']):
+                        #st.image(c['profileImgUrl'], width=150)
+                        st.subheader(frames.fullName[i])
+                        st.write('Personal Account')
+                        st.write(c['title']) #postType
+                        with st.expander('Post Content 📜'):
+                             st.write(c['textContent'])  #postContent
+                        st.write('Total Interactions 📈:  ',c['Total Interactions']) #totInteractions
+                        st.write('Likes 👍:  ',c['likeCount']) #totInteractions
+                        st.write('Comments 💬:  ',c['commentCount']) #totInteractions
+                        #st.write('Action 📌:  ',c['action']) #totInteractions
+                        st.write('Publish Date & Time 📆:         ',c['postDate']) #publishDate
+                        with st.expander('Link to this Post 📮'):
+                             st.write(c['postUrl']) #linktoPost
+                        with st.expander('Link to  Profile 🔗'):
+                             st.write(c['profileUrl']) #linktoProfile
+                    
+                    if not pd.isnull(c['logoUrl']):
+                        st.image(c['logoUrl'], width=150)
+                    
+                        st.subheader(c['companyName'])
+                        st.write('Corporate Account')
+                        st.write('👥:  ',c['followerCount'])
+                        with st.expander('Post Content 📜'):
+                             st.write(c['textContent'])  #postContent
+                        st.write('Total Interactions 📈:  ',c['Total Interactions']) #totInteractions
+                        st.write('Likes 👍:  ',c['likeCount']) #totInteractions
+                        st.write('Comments 💬:  ',c['commentCount']) #totInteractions
+                        #st.write('Action 📌:  ',c['action']) #totInteractions
+                        st.write('Publish Date & Time 📆:         ',c['postDate']) #publishDate
+                        with st.expander('Link to this Post 📮'):
+                             st.write(c['postUrl']) #linktoPost
+                        with st.expander('Link to  Company Profile 🔗'):
+                             st.write(c['companyUrl']) #linktoProfile
+                        
+                    
+                    
+                       
+
+                    
+                    #st.write('Type of Post 📨:  ',c['type']) #postType
+                    
+                    if not pd.isnull(c['postImgUrl']):
+                        st.image(c['postImgUrl'])
+                        st.write('Image from the Post  🗾')
+                    
+   else:
+            st.image('https://img.freepik.com/premium-vector/hazard-warning-attention-sign-with-exclamation-mark-symbol-white_231786-5218.jpg?w=2000', width =200)
+            st.subheader('Oops... No new post found in last Hours.')
+
+
+with tab7:
+
+   if st.button('Show Data with Keyword Finanzamt'):
+      st.write(df_fin)
+
+   df_fin = df_fin[df_fin['date']>=(dt.datetime.now()-dt.timedelta(days=1))] #hours = 6,12, 24
+   st.write(f'Total posts found in last Hours: ', df_fin.shape[0])
+   st.subheader('Total Interaction getting in past hours in the day')
+   #st.bar_chart(df_Steuerrecht, x='Hour', y='Total Interactions')
+
+   st.header(f'Top Interacting Posts today')
+   df_fin.sort_values(['Total Interactions'], ascending=False, inplace=True)
+   df_fin = df_fin.reset_index(drop=True)
+   #df_gru_100 = df_gru_100.head(10)
+   num_posts = df_fin.shape[0]
+
+   if  num_posts>0:
+
+     #splits = np.array_split(df5,5)
+     splits = df_fin.groupby(df_fin.index // 3)
+     for _, frames in splits:
+          frames = frames.reset_index(drop=True)
+          #print(frames.head())
+          thumbnails = st.columns(frames.shape[0])
+          for i, c in frames.iterrows():
+               with thumbnails[i]:
+
+                    if not pd.isnull(c['profileImgUrl']):
+                        st.image(c['profileImgUrl'], width=150)
+                    if not pd.isnull(c['profileUrl']):
+                        #st.image(c['profileImgUrl'], width=150)
+                        st.subheader(frames.fullName[i])
+                        st.write('Personal Account')
+                        st.write(c['title']) #postType
+                        with st.expander('Post Content 📜'):
+                             st.write(c['textContent'])  #postContent
+                        st.write('Total Interactions 📈:  ',c['Total Interactions']) #totInteractions
+                        st.write('Likes 👍:  ',c['likeCount']) #totInteractions
+                        st.write('Comments 💬:  ',c['commentCount']) #totInteractions
+                        #st.write('Action 📌:  ',c['action']) #totInteractions
+                        st.write('Publish Date & Time 📆:         ',c['postDate']) #publishDate
+                        with st.expander('Link to this Post 📮'):
+                             st.write(c['postUrl']) #linktoPost
+                        with st.expander('Link to  Profile 🔗'):
+                             st.write(c['profileUrl']) #linktoProfile
+                    
+                    if not pd.isnull(c['logoUrl']):
+                        st.image(c['logoUrl'], width=150)
+                    
+                        st.subheader(c['companyName'])
+                        st.write('Corporate Account')
+                        st.write('👥:  ',c['followerCount'])
+                        with st.expander('Post Content 📜'):
+                             st.write(c['textContent'])  #postContent
+                        st.write('Total Interactions 📈:  ',c['Total Interactions']) #totInteractions
+                        st.write('Likes 👍:  ',c['likeCount']) #totInteractions
+                        st.write('Comments 💬:  ',c['commentCount']) #totInteractions
+                        #st.write('Action 📌:  ',c['action']) #totInteractions
+                        st.write('Publish Date & Time 📆:         ',c['postDate']) #publishDate
+                        with st.expander('Link to this Post 📮'):
+                             st.write(c['postUrl']) #linktoPost
+                        with st.expander('Link to  Company Profile 🔗'):
+                             st.write(c['companyUrl']) #linktoProfile
+                        
+                    
+                    
+                       
+
+                    
+                    #st.write('Type of Post 📨:  ',c['type']) #postType
+                    
+                    if not pd.isnull(c['postImgUrl']):
+                        st.image(c['postImgUrl'])
+                        st.write('Image from the Post  🗾')
+                    
+   else:
+            st.image('https://img.freepik.com/premium-vector/hazard-warning-attention-sign-with-exclamation-mark-symbol-white_231786-5218.jpg?w=2000', width =200)
+            st.subheader('Oops... No new post found in last Hours.')
+
+
+with tab8:
+
+   
+            st.image('https://img.freepik.com/premium-vector/hazard-warning-attention-sign-with-exclamation-mark-symbol-white_231786-5218.jpg?w=2000', width =200)
+            st.subheader('Oops... No new post found with the given keyword in last 24 Hours.')
+with tab9:
+
+   
+            st.image('https://img.freepik.com/premium-vector/hazard-warning-attention-sign-with-exclamation-mark-symbol-white_231786-5218.jpg?w=2000', width =200)
+            st.subheader('Oops... No new post found with the given keyword in last 24 Hours.')
+
+with tab10:
+
+   
+            st.image('https://img.freepik.com/premium-vector/hazard-warning-attention-sign-with-exclamation-mark-symbol-white_231786-5218.jpg?w=2000', width =200)
+            st.subheader('Oops... No new post found with the given keyword in last 24 Hours.')
+
+with tab12:
+
+   
+            st.image('https://img.freepik.com/premium-vector/hazard-warning-attention-sign-with-exclamation-mark-symbol-white_231786-5218.jpg?w=2000', width =200)
+            st.subheader('Oops...the data will be updated soon')
+
+with tab13:
+
+   
+            st.image('https://img.freepik.com/premium-vector/hazard-warning-attention-sign-with-exclamation-mark-symbol-white_231786-5218.jpg?w=2000', width =200)
+            st.subheader('Oops...the data will be updated soon')
+
+
+with tab14:
+
+   
+            st.image('https://img.freepik.com/premium-vector/hazard-warning-attention-sign-with-exclamation-mark-symbol-white_231786-5218.jpg?w=2000', width =200)
+            st.subheader('Oops...the data will be updated soon')
+
+with tab11:
 
 
     
