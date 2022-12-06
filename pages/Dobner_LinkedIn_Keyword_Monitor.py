@@ -182,7 +182,7 @@ with tab1:
    if st.button('Show All Data'):
       st.write(df_all)
 
-   df_all = df_all[df_all['date']>=(dt.datetime.now()-dt.timedelta(days=1))] #hours = 6,12, 24
+   df_all = df_all[df_all['date']>=(dt.datetime.now()-dt.timedelta(days=5))] #hours = 6,12, 24
    st.write(f'Total posts found in last Hours: ', df_all.shape[0])
    st.subheader('Total Interaction getting in past hours in the day')
    st.bar_chart(df_all, x='Hour', y='Total Interactions')
