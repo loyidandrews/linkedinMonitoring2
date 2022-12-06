@@ -166,7 +166,7 @@ df30['Total_Interactions'] = df30['Total_Interactions'].astype(int)
 #AgGrid(df30, height=500, fit_columns_on_grid_load=True)
 
 if st.button('Show Data'):
-    AgGrid(df30, height=500, fit_columns_on_grid_load=True)
+    st.write(df30.head())
 
 #st.write(df30)
 st.write(f'Total posts in last 12 Months: ', df30.shape[0])
