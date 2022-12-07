@@ -5,7 +5,7 @@ import streamlit as st
 
 #from st_aggrid import AgGrid
 
-#import plotly.express as px
+import plotly.express as px
 
 from streamlit_option_menu import option_menu
 
@@ -399,6 +399,7 @@ st.download_button(
 #     width=1000, 
 #     height=600
 # )
+
 fig = px.bar(
 
     df5,x="Total Interactions",y="CEO",color = "Activity", orientation='h')
