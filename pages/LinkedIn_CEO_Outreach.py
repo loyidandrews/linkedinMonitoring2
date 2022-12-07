@@ -399,21 +399,21 @@ st.download_button(
 #     width=1000, 
 #     height=600
 # )
-# fig = px.bar(
+fig = px.bar(
 
-#     df5,x="Total Interactions",y="CEO",color = "Activity", orientation='h')
+    df5,x="Total Interactions",y="CEO",color = "Activity", orientation='h')
 
 
-# fig.update_layout(showlegend=False, plot_bgcolor='rgba(0,0,0,0)', width=600)
+fig.update_layout(showlegend=False, plot_bgcolor='rgba(0,0,0,0)', width=600)
 
-# #st.plotly_chart(fig)
+#st.plotly_chart(fig)
 
-# #st.subheader(f'Type of Outreach for each CEOs : last {int(number)} days')
-# fig1 = px.bar(
+#st.subheader(f'Type of Outreach for each CEOs : last {int(number)} days')
+fig1 = px.bar(
 
-#     df5,x="CEO",y="Activity",color = "Activity")
+    df5,x="CEO",y="Activity",color = "Activity")
 
-# fig1.update_layout(showlegend=True, plot_bgcolor='rgba(0,0,0,0)', width=550)
+fig1.update_layout(showlegend=True, plot_bgcolor='rgba(0,0,0,0)', width=550)
 
 #st.plotly_chart(fig1)
 
@@ -421,11 +421,11 @@ col1, col2 = st.columns(2)
 
 with col1:
    st.subheader(f'Total Interactions: past {int(number)} days')
-   st.bar_chart(df5, x='CEO', y='Total_Interactions',use_container_width=True)
+   st.plotly_chart(fig)
 
 with col2:
    st.subheader(f'Type of Outreach: past {int(number)} days')
-   st.bar_chart(df5, x='CEO', y='Activity',use_container_width=True)
+   st.plotly_chart(fig1)
 
 
 
